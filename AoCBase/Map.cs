@@ -74,6 +74,9 @@ namespace AoCBase
         internal readonly Dictionary<(T start, T end), List<(HashSet<U> doors, int steps)>> _pathsWithDoors;
         internal readonly Dictionary<U, List<T>> _reverseMap;
 
+        public readonly bool HasFixedDefault = false;
+        public readonly U FixedDefault;
+
         /// <summary>
         /// Create an instance of the Map class
         /// 
@@ -83,7 +86,11 @@ namespace AoCBase
         /// <param name="defaultValue"></param>
         public Map(Dictionary<T, U> map, Func<T, U> defaultValue) : this(map, (t, d) => defaultValue(t)) {}
 
-        public Map(Dictionary<T, U> map, U defaultValue = default) : this(map, t => defaultValue) {}
+        public Map(Dictionary<T, U> map, U defaultValue = default) : this(map, t => defaultValue) 
+        {
+            HasFixedDefault = true;
+            FixedDefault = defaultValue;
+        }
 
         public Map(Dictionary<T, U> map, Func<T, Dictionary<T, U>, U> defaultValue)
         {
@@ -358,6 +365,11 @@ namespace AoCBase
         public List<T> LocationsWhere(Func<T, bool> locationMatch)
         {
             return _map.Where(kv => locationMatch(kv.Key)).Select(kv => kv.Key).ToList();
+        }
+
+        public List<T> Keys()
+        {
+            return _map.Keys.ToList();
         }
 
         /// <summary>

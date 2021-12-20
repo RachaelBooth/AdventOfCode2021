@@ -10,7 +10,7 @@ namespace AoC2021
         {
             var x = Assembly.GetEntryAssembly().GetTypes().Where(type =>
                 typeof(BaseProblem).IsAssignableFrom(type) && !type.IsInterface && !type.IsAbstract);
-            Solver.SolveAll();
+            Solver.SolveLast();
         }
     }
 }
