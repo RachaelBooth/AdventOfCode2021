@@ -25,6 +25,17 @@ namespace AoCBase
             return result;
         }
 
+        public static BigInteger PositiveMod(BigInteger value, BigInteger modulus)
+        {
+            var result = value % modulus;
+            while (result <= 0)
+            {
+                result += modulus;
+            }
+
+            return result;
+        }
+
         public static BigInteger MultiplyMod(BigInteger modulus, params BigInteger[] values)
         {
             if (values.Length > 2)
