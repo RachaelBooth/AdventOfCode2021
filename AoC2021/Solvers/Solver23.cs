@@ -1,5 +1,4 @@
 ﻿using AoCBase;
-using AoCBase.Vectors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,38 +18,6 @@ namespace AoC2021.Solvers
 
         public override string Solve_1()
         {
-            /*var min = long.MaxValue;
-            var start = new AmphipodBurrow(initialMap, 3);
-
-            var current = start;
-            while (true)
-            {
-                current.Draw();
-                var action = Console.ReadLine();
-                if (action == "stop")
-                {
-                    break;
-                }
-
-                if (action == "move")
-                {
-                    var from = Console.ReadLine().Split(',');
-                    var to = Console.ReadLine().Split(',');
-                    current = current.Move((int.Parse(from[0]), int.Parse(from[1])), (int.Parse(to[0]), int.Parse(to[1])));
-
-                    if (current.IsComplete())
-                    {
-                        Console.WriteLine("Completed");
-                        if (current.EnergyUsed < min)
-                        {
-                            min = current.EnergyUsed;
-                        }
-                        current = start;
-                    }
-                }
-            }
-
-            return min.ToString(); */
             var burrow = new AmphipodBurrow(initialMap, 3);
             var burrowState = burrow.State();
             var seenStates = new Dictionary<string, long>();
@@ -325,8 +292,8 @@ namespace AoC2021.Solvers
                         var destination = (destinationIndex, y);
                         var energy = steps * EnergyMultiplier(amphipodType);
                         // No point in bothering with any other possible moves ?
-                        // return new List<AmphipodBurrow> { CopyWithUpdate(amphipodType, location, destination, energy) };
-                        newStates.Add(CopyWithUpdate(amphipodType, location, destination, energy));
+                        return new List<AmphipodBurrow> { CopyWithUpdate(amphipodType, location, destination, energy) };
+                        //newStates.Add(CopyWithUpdate(amphipodType, location, destination, energy));
                     }
 
                     if (IsInDestinationRoomAndNotBlocking(location, amphipodType))
