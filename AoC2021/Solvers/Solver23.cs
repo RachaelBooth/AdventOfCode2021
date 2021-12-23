@@ -8,6 +8,8 @@ namespace AoC2021.Solvers
 {
     public class Solver23 : BaseSolver
     {
+        // I hate all of this and can't be bothered to clean it up
+
         private Dictionary<(int x, int y), char> initialMap;
 
         public Solver23()
@@ -136,6 +138,9 @@ namespace AoC2021.Solvers
             return minComplete.ToString();
         }
 
+        // Given I convert everything to and from strings, should probably just make a moves function that does it from strings rather than
+        // having this whole class.
+        // But I wasn't always doing that, and again, I really can't be bothered.
         private class AmphipodBurrow
         {
             public long EnergyUsed;
@@ -224,6 +229,7 @@ namespace AoC2021.Solvers
                 return new AmphipodBurrow(map, maxY, energy);
             }
 
+            // I tried setting up to test things manually at one point. But that was also terrible.
             public void Draw()
             {
                 Console.WriteLine("#############");
@@ -267,6 +273,7 @@ namespace AoC2021.Solvers
                 Console.WriteLine();
             }
 
+            // QQ could be better
             public List<AmphipodBurrow> GetMoves()
             {
                 var newStates = new List<AmphipodBurrow>();
@@ -274,7 +281,8 @@ namespace AoC2021.Solvers
                 {
                     var location = amphipod.Key;
                     var amphipodType = amphipod.Value;
-
+                    // Probably calculating some things multiple times in the various functions
+                    // But I'm not going to sort that. Just no.
                     if (CanMoveToDestination(location, amphipodType))
                     {
                         var destinationIndex = RoomIndex(amphipodType);
@@ -392,6 +400,9 @@ namespace AoC2021.Solvers
 
             private bool HallwayIsUnblocked(int startIndex, int endIndex)
             {
+                // This was the bug, I had x = start + 1 to account for you not blocking yourself
+                // instead of accounting for it in the swap, so if you started to the right of 
+                // where you were going you blocked yourself. :facepalm:
                 var start = startIndex < endIndex ? startIndex + 1 : endIndex;
                 var end = startIndex < endIndex ? endIndex : startIndex - 1;
                 var x = start;
