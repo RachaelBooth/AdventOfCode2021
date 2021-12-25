@@ -32,9 +32,17 @@ namespace AoC2021.Solvers
 
             // So the answer should be: 29991993698469
 
-            // smallest should be: 14691271141118
+            // (part 2) smallest should be: 14691271141118
 
-            while (true)
+            // Yes, I used a spreadsheet, split by sections for each digit, noticing that they're mostly the same with different numbers added
+            // and some where, if you've chosen the numbers correctly, you can make z smaller. For my input, that led to the above.
+            // I used the below to check my answers did actually turn out valid, and play around a bit, but the above (and the large amount of effort 
+            // working it out) was how the solve happened.
+            
+            // I did try it programmatically first in a few different ways. But this is where I got to.
+
+            // this was while (true) when using it, obviously, I've just toggled it so that running all for a combined runtime doesn't break;
+            while (false)
             {
                 var input = Console.ReadLine();
                 if (input.Length != 14)
@@ -46,13 +54,12 @@ namespace AoC2021.Solvers
                     TestInput(input);
                 }
             }
-
-            return "";
+            return "29991993698469";
         }
 
         public override string Solve_2()
         {
-            return "not implemented";
+            return "14691271141118";
         }
 
         private void TestInput(string input)
@@ -72,66 +79,6 @@ namespace AoC2021.Solvers
                 }
             }
             Console.WriteLine(current.ToString());
-        }
-
-
-        private Dictionary<State, List<string>> RunInstruction(Instruction instruction, Dictionary<State, List<string>> states)
-        {
-            var result = new Dictionary<State, List<string>>();
-
-            if (instruction.Type == InstructionType.Input)
-            {
-                foreach (var entry in states)
-                {
-                    var i = 1;
-                    var maxI = 9;
-                    var t = entry.Value[0].Length;
-
-                    if (t == 3)
-                    {
-                        i = 9;
-                    }
-                    else if (t == 4)
-                    {
-                        maxI = 1;
-                    }
-                    else if (t == 6)
-                    {
-                        i = 7;
-                    }
-                    else if (t == 7)
-                    {
-                        maxI = 3;
-                    }
-                    else if (t == 8)
-                    {
-                        maxI = 6;
-                    }
-                    else if (t == 9)
-                    {
-                        i = 4;
-                    }
-
-
-                    while (i <= maxI)
-                    {
-                        var after = entry.Key.UpdateValue(instruction.A, i);
-                        result.AddOptions(after, entry.Value.Select(v => v + i));
-                        i++;
-                    }
-                }
-                return result;
-            }
-
-            foreach (var entry in states)
-            {
-                var after = entry.Key.RunNonInputInstruction(instruction);
-                if (after != null)
-                {
-                    result.AddOptions(after, entry.Value);
-                }
-            }
-            return result;
         }
 
         private record class State(BigInteger W, BigInteger X, BigInteger Y, BigInteger Z)
