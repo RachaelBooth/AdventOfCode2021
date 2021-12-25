@@ -72,6 +72,11 @@ namespace AoCBase
             dict.GetValues(key).AddRange(values);
         }
 
+        public static void AddOptions<T, U>(this Dictionary<T, List<U>> dict, T key, IEnumerable<U> values)
+        {
+            dict.GetValues(key).AddRange(values);
+        }
+
         /// <summary>
         /// U must have + defined, but can't restrict for that at compile time because C# argh.
         /// </summary>
